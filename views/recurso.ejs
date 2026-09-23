@@ -1,0 +1,64 @@
+<%- include('partials/head', { titulo: recurso.seo?.title || recurso.titulo, descripcion: recurso.seo?.description || recurso.descripcionCorta, ogImagen: recurso.imagen }) %>
+<%- include('partials/header') %>
+
+<main class="pagina-recurso">
+  <section class="contenedor">
+    <div class="panel panel--recurso">
+      <div class="panel__texto">
+        <p class="eyebrow eyebrow--claro"><%= recurso.etiqueta || 'Recurso gratis' %> · <%= recurso.formato %></p>
+        <h1 class="display panel__titulo"><%= recurso.titulo %><br><span class="acento"><%= recurso.tituloDestacado %></span></h1>
+        <p class="panel__desc"><%= recurso.descripcion %></p>
+
+        <% if (recurso.incluye?.length) { %>
+          <p class="panel__subtitulo">Lo que incluye</p>
+          <ul class="checks checks--claro">
+            <% recurso.incluye.forEach(function (item) { %><li><%= item %></li><% }) %>
+          </ul>
+        <% } %>
+      </div>
+
+      <div class="panel__form">
+        <img class="panel__foto" src="/img/<%= recurso.imagen %>" alt="<%= recurso.imagenAlt || '' %>" width="1200" height="764">
+
+        <!-- El envío lo maneja public/js/main.js: manda los datos al Apps Script (Google Sheets) y lleva a la página de descarga -->
+        <form class="form" method="post" action="<%= endpoint %>" novalidate
+              data-suscripcion
+              data-endpoint="<%= endpoint %>"
+              data-recurso="<%= recurso.slug %>"
+              data-gracias="/recursos/<%= recurso.slug %>/gracias">
+          <p class="form__titulo">Déjame tu email y descárgala gratis</p>
+
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="given-name" maxlength="60" required aria-describedby="err-nombre">
+            <p class="campo__error" id="err-nombre" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="err-email">
+            <p class="campo__error" id="err-email" hidden></p>
+          </div>
+
+          <!-- Honeypot anti-bots: oculto para humanos -->
+          <div class="oculto" aria-hidden="true">
+            <label for="sitio_web">No llenes este campo</label>
+            <input id="sitio_web" name="sitio_web" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="check">
+            <input type="checkbox" name="acepto" value="si" required aria-describedby="err-acepto">
+            <span>Acepto recibir contenido de <%= site.nombre %> y la <a href="/privacidad" target="_blank">política de privacidad</a>.</span>
+          </label>
+          <p class="campo__error" id="err-acepto" hidden></p>
+
+          <button class="boton boton--ancho" type="submit">Quiero mi plantilla</button>
+          <p class="form__estado" role="alert" hidden></p>
+          <p class="form__nota">Cero spam. Te puedes dar de baja cuando quieras.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

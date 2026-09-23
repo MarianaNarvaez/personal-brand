@@ -1,0 +1,122 @@
+<%- include('partials/head', { titulo: site.nombre + ' | Finanzas para el mundo tech', descripcion: 'Ingeniera de sistemas y coach financiera. Aprende a manejar tu dinero si trabajas en tech: a dónde se va tu plata, cómo ponerla a trabajar y cómo protegerla.' }) %>
+<%- include('partials/header') %>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="contenedor hero__grid">
+      <div class="hero__texto">
+        <p class="eyebrow">Finanzas para el mundo tech</p>
+        <h1 class="display">Ganas bien,<br><span class="acento">pero no sabes</span><br>a dónde se va la plata</h1>
+        <p class="hero__sub">Soy Mari: ingeniera de sistemas y coach financiera. Te enseño a crear, mantener y multiplicar tu dinero, sin fórmulas mágicas ni teoría genérica.</p>
+        <div class="hero__ctas">
+          <a class="boton" href="#recursos">Descarga mis plantillas gratis</a>
+          <a class="boton boton--borde" href="<%= site.youtube.suscribirse %>" target="_blank" rel="noopener noreferrer">Ver el canal</a>
+        </div>
+        <ul class="checks">
+          <% site.credenciales.forEach(function (c) { %><li><%= c %></li><% }) %>
+        </ul>
+      </div>
+      <div class="hero__foto">
+        <div class="circulo" aria-hidden="true"></div>
+        <div class="puntos puntos--a" aria-hidden="true"></div>
+        <div class="puntos puntos--b" aria-hidden="true"></div>
+        <img src="/img/mari-hero-naranja.jpg" alt="Mari Narváez, coach financiera" width="1200" height="1152">
+      </div>
+    </div>
+  </section>
+
+  <!-- FRANJA YOUTUBE -->
+  <section class="franja">
+    <div class="contenedor franja__fila">
+      <p class="display franja__titulo"><%= site.youtube.horario %></p>
+      <a class="boton boton--blanco" href="<%= site.youtube.suscribirse %>" target="_blank" rel="noopener noreferrer">Subscribe</a>
+    </div>
+  </section>
+
+  <!-- DOLORES -->
+  <section class="seccion">
+    <div class="contenedor">
+      <p class="eyebrow">¿Te suena familiar?</p>
+      <h2 class="display titulo-seccion">Vivir al día con un buen salario</h2>
+      <div class="tarjetas tarjetas--3">
+        <article class="tarjeta">
+          <span class="tarjeta__num">01</span>
+          <h3>Llega el pago y a los 15 días ya no hay</h3>
+          <p>No hay un gasto enorme que lo explique. Son muchos pequeños que no estás viendo.</p>
+        </article>
+        <article class="tarjeta">
+          <span class="tarjeta__num">02</span>
+          <h3>Dependes de un solo ingreso</h3>
+          <p>Un despido o un recorte en tech y todo tu plan se cae. Yo también viví esa incertidumbre.</p>
+        </article>
+        <article class="tarjeta">
+          <span class="tarjeta__num">03</span>
+          <h3>Sabes que deberías invertir, pero no por dónde empezar</h3>
+          <p>Hay mucho ruido y consejos genéricos que no aplican a tu realidad.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUÉ APRENDERÁS -->
+  <section class="seccion seccion--azul" id="aprender">
+    <div class="contenedor aprender">
+      <div class="aprender__foto">
+        <img src="/img/mari-explicando.jpg" alt="Mari explicando finanzas personales" width="1200" height="664" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow eyebrow--claro">Lo que vas a aprender</p>
+        <h2 class="display titulo-seccion">Manejar tu dinero <span class="acento">de verdad</span></h2>
+        <ol class="pilares">
+          <li><strong>Entender a dónde se va tu plata.</strong> Un presupuesto que sí puedas sostener.</li>
+          <li><strong>Ponerla a trabajar.</strong> Ahorro e inversión explicados para tu día a día.</li>
+          <li><strong>Diversificar y aumentar tus ingresos.</strong> Dejar de depender de un solo salario.</li>
+          <li><strong>Protegerla.</strong> Fondo de emergencias, seguros y decisiones que te cuidan.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section class="seccion" id="recursos">
+    <div class="contenedor">
+      <p class="eyebrow">Gratis</p>
+      <h2 class="display titulo-seccion">Plantillas para empezar hoy</h2>
+      <div class="tarjetas tarjetas--recursos">
+        <% recursos.forEach(function (r) { %>
+          <a class="recurso-card" href="/recursos/<%= r.slug %>">
+            <span class="pill"><%= r.formato %></span>
+            <h3><%= r.titulo %> <span class="acento"><%= r.tituloDestacado %></span></h3>
+            <p><%= r.descripcionCorta %></p>
+            <span class="recurso-card__cta">Descargar gratis →</span>
+          </a>
+        <% }) %>
+        <div class="recurso-card recurso-card--pronto" aria-hidden="true">
+          <span class="pill pill--gris">Muy pronto</span>
+          <h3>Más plantillas en camino</h3>
+          <p>Cada mes agrego nuevas herramientas. Suscríbete al canal para enterarte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <section class="seccion seccion--crema" id="sobre-mi">
+    <div class="contenedor sobre">
+      <div class="sobre__foto">
+        <div class="circulo circulo--chico" aria-hidden="true"></div>
+        <img src="/img/mari-retrato-sonrisa.jpg" alt="Retrato de Mari Narváez" width="1039" height="1200" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow">Sobre mí</p>
+        <h2 class="display titulo-seccion">Hola, soy Mari</h2>
+        <p>Soy ingeniera de sistemas y coach financiera con conocimientos validados por el Autorregulador del Mercado de Valores (AMV). Trabajo en el mundo tech y viví en carne propia la incertidumbre de depender de un solo salario.</p>
+        <p>Hoy, después de 3 años acompañando a personas de este sector, comparto lo que realmente funciona para dejar de vivir al día y construir libertad financiera real.</p>
+        <a class="boton" href="<%= site.youtube.suscribirse %>" target="_blank" rel="noopener noreferrer">Nuevo video cada lunes</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

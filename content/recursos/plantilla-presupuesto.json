@@ -1,0 +1,33 @@
+{
+  "slug": "plantilla-presupuesto",
+  "activo": true,
+  "orden": 1,
+  "etiqueta": "Plantilla gratis",
+  "titulo": "Tu presupuesto mensual",
+  "tituloDestacado": "en una sola hoja",
+  "descripcionCorta": "La misma plantilla que uso para saber a dónde se va mi plata cada mes: compromisos, ahorros y gusticos.",
+  "descripcion": "Si ganas bien pero a fin de mes no sabes qué pasó con tu salario, empieza aquí. Esta plantilla divide tu dinero en tres bolsillos para que veas en minutos cuánto presupuestaste, cuánto gastaste y cuánto te queda.",
+  "incluye": [
+    "Gastos fijos (compromisos): arriendo, servicios, mercado, transporte y deudas",
+    "Ahorros (mínimo el 10%): metas a corto plazo, fondo de emergencias y retiro",
+    "Gusticos sin culpa: cuidado personal, salidas y viajes",
+    "Resumen automático: presupuesto vs. lo que realmente gastaste"
+  ],
+  "formato": "Excel · Google Sheets",
+  "imagen": "mari-senalando-sonrisa.jpg",
+  "imagenAlt": "Mari Narváez señalando la plantilla de presupuesto",
+  "descargas": {
+    "excel": {
+      "label": "Descargar Excel (.xlsx)",
+      "url": "https://drive.google.com/uc?export=download&id=1swKY4PLZ-Nwv5IPmFMHzot8nE1vSIpbW"
+    },
+    "drive": {
+      "label": "Abrir en Google Drive",
+      "url": "https://docs.google.com/spreadsheets/d/1swKY4PLZ-Nwv5IPmFMHzot8nE1vSIpbW/edit"
+    }
+  },
+  "seo": {
+    "title": "Plantilla de presupuesto mensual gratis | Mari Narváez",
+    "description": "Descarga gratis la plantilla de presupuesto de Mari Narváez: compromisos, ahorros y gusticos en una sola hoja."
+  }
+}

@@ -1,0 +1,36 @@
+<%- include('partials/head', { titulo: '¡Listo! Descarga tu plantilla | ' + site.nombre, descripcion: recurso.descripcionCorta, ogImagen: recurso.imagen }) %>
+<%- include('partials/header') %>
+
+<!-- data-acceso: si la persona no pasó por el formulario, main.js la devuelve a la página del recurso -->
+<main class="pagina-recurso" data-acceso="<%= recurso.slug %>" data-formulario="/recursos/<%= recurso.slug %>">
+  <section class="contenedor">
+    <div class="panel panel--gracias">
+      <div class="panel__texto">
+        <p class="eyebrow eyebrow--claro">Ya estás dentro</p>
+        <h1 class="display panel__titulo">Tu plantilla<br><span class="acento">está lista</span></h1>
+        <p class="panel__subtitulo">Descárgala aquí</p>
+        <p class="panel__desc">Gracias por confiar en mí. Elige cómo quieres usarla:</p>
+
+        <div class="descargas">
+          <% Object.keys(recurso.descargas).forEach(function (tipo, i) { %>
+            <a class="boton<%= i > 0 ? ' boton--borde-claro' : '' %>" href="<%= recurso.descargas[tipo].url %>" target="_blank" rel="noopener noreferrer"><%= recurso.descargas[tipo].label %></a>
+          <% }) %>
+        </div>
+
+        <p class="panel__tip">Tip: si la abres en Google Drive, ve a <strong>Archivo → Hacer una copia</strong> para editar tu propia versión.</p>
+      </div>
+      <div class="panel__visual">
+        <div class="circulo circulo--grande" aria-hidden="true"></div>
+        <img src="/img/mari-sonrisa-lado.jpg" alt="Mari Narváez sonriendo" width="988" height="1200">
+      </div>
+    </div>
+
+    <div class="siguiente">
+      <p class="display">¿Quieres aprender a sacarle el jugo?</p>
+      <a class="boton" href="<%= site.youtube.suscribirse %>" target="_blank" rel="noopener noreferrer">Mira los videos del canal</a>
+      <a class="enlace" href="/#recursos">Ver más plantillas</a>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

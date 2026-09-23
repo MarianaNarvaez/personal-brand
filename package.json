@@ -1,0 +1,19 @@
+{
+  "name": "mari-narvaez-landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing y páginas de recursos descargables de Mari Narváez (finanzas para el mundo tech)",
+  "main": "scripts/build.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "ejs": "6.0.1"
+  }
+}

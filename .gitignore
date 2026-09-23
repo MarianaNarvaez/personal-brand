@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.env
+# Registros de prueba locales (datos personales): nunca subir a git
+data/*.txt

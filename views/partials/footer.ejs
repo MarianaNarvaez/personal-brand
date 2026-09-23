@@ -1,0 +1,18 @@
+<footer class="footer">
+  <div class="contenedor footer__fila">
+    <div>
+      <%- include('logo') %>
+      <p class="footer__lema"><%= site.lema %></p>
+    </div>
+    <div class="footer__links">
+      <a href="<%= site.youtube.canal %>" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <% site.redes.forEach(function (red) { %>
+        <a href="<%= red.url %>" target="_blank" rel="noopener noreferrer"><%= red.nombre %></a>
+      <% }) %>
+      <a href="<%= site.politicaPrivacidad %>">Privacidad</a>
+    </div>
+  </div>
+  <p class="footer__legal contenedor">© <%= anio %> <%= site.nombre %>. Contenido educativo, no constituye asesoría de inversión personalizada.</p>
+</footer>
+</body>
+</html>
