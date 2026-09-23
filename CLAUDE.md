@@ -3,9 +3,12 @@
 Sitio de **Mari Narváez**: ingeniera de sistemas y coach financiera (conocimientos validados por el AMV). Audiencia: profesionales del sector tech en Latam (principalmente Colombia) que ganan bien pero viven al día. Tono: cercano, directo, práctico, en español neutro-colombiano ("plata", "gusticos"), tuteando. Nada de promesas de rentabilidad ni "fórmulas mágicas".
 
 ## Arquitectura
-- **Sitio estático** generado con EJS → `dist/`, publicado en **Cloudflare Pages** (build: `npm run build`, salida: `dist`). No hay servidor Node en producción.
+- **Sitio estático** generado con EJS → `dist/`, publicado en **GitHub Pages** con `.github/workflows/deploy.yml` (pruebas + npm audit + build + deploy). No hay servidor Node en producción.
+- El sitio vive en un subdirectorio (`usuario.github.io/mari-landing`): **todas las rutas internas en las vistas usan `ruta('/...')`**, que antepone `BASE_PATH`. Nunca escribir `href="/..."` directo.
+- GitHub Pages no admite cabeceras: la CSP va en `<meta>` (`head.ejs`, generada por `lib/headers.js`). Si agregas un dominio externo (script, fuente, API), actualízalo ahí.
+- Las acciones de GitHub están fijadas por SHA de commit; al actualizarlas, usar el SHA del tag nuevo.
 - **Formulario → Google Apps Script → Google Sheet.** `public/js/main.js` hace `fetch` POST (JSON, sin cabeceras personalizadas para evitar preflight CORS) a `site.formularioUrl`. El script está en `apps-script/Code.gs` y se pega manualmente en la Sheet.
-- `scripts/build.js`: renderiza vistas y escribe `_headers` (CSP) y `_redirects`. Falla si `formularioUrl` no es una URL https de script.google.com.
+- `scripts/build.js`: renderiza vistas, escribe `_headers` (útil solo si se cambia a Cloudflare/Netlify) y `recursos/index.html` (redirección). Falla si `formularioUrl` no es una URL https de script.google.com.
 - `scripts/dev.js`: servidor local con recarga; simula el Apps Script en `/__dev/suscribir` y guarda en `data/suscriptores-local.txt`.
 - `lib/recursos.js` carga `content/recursos/*.json` (una página de descarga por archivo). `lib/headers.js` define las cabeceras de seguridad.
 - `content/site.js` datos globales (links, redes, formularioUrl). `views/` plantillas; `views/partials/` head, header, footer, logo.

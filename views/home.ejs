@@ -21,7 +21,7 @@
         <div class="circulo" aria-hidden="true"></div>
         <div class="puntos puntos--a" aria-hidden="true"></div>
         <div class="puntos puntos--b" aria-hidden="true"></div>
-        <img src="/img/mari-hero-naranja.jpg" alt="Mari Narváez, coach financiera" width="1200" height="1152">
+        <img src="<%= ruta('/img/mari-hero-naranja.jpg') %>" alt="Mari Narváez, coach financiera" width="1200" height="1152">
       </div>
     </div>
   </section>
@@ -63,7 +63,7 @@
   <section class="seccion seccion--azul" id="aprender">
     <div class="contenedor aprender">
       <div class="aprender__foto">
-        <img src="/img/mari-explicando.jpg" alt="Mari explicando finanzas personales" width="1200" height="664" loading="lazy">
+        <img src="<%= ruta('/img/mari-explicando.jpg') %>" alt="Mari explicando finanzas personales" width="1200" height="664" loading="lazy">
       </div>
       <div>
         <p class="eyebrow eyebrow--claro">Lo que vas a aprender</p>
@@ -85,7 +85,7 @@
       <h2 class="display titulo-seccion">Plantillas para empezar hoy</h2>
       <div class="tarjetas tarjetas--recursos">
         <% recursos.forEach(function (r) { %>
-          <a class="recurso-card" href="/recursos/<%= r.slug %>">
+          <a class="recurso-card" href="<%= ruta('/recursos/') %><%= r.slug %>">
             <span class="pill"><%= r.formato %></span>
             <h3><%= r.titulo %> <span class="acento"><%= r.tituloDestacado %></span></h3>
             <p><%= r.descripcionCorta %></p>
@@ -106,7 +106,7 @@
     <div class="contenedor sobre">
       <div class="sobre__foto">
         <div class="circulo circulo--chico" aria-hidden="true"></div>
-        <img src="/img/mari-retrato-sonrisa.jpg" alt="Retrato de Mari Narváez" width="1039" height="1200" loading="lazy">
+        <img src="<%= ruta('/img/mari-retrato-sonrisa.jpg') %>" alt="Retrato de Mari Narváez" width="1039" height="1200" loading="lazy">
       </div>
       <div>
         <p class="eyebrow">Sobre mí</p>

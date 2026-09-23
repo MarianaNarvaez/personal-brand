@@ -18,14 +18,14 @@
       </div>
 
       <div class="panel__form">
-        <img class="panel__foto" src="/img/<%= recurso.imagen %>" alt="<%= recurso.imagenAlt || '' %>" width="1200" height="764">
+        <img class="panel__foto" src="<%= ruta('/img/') %><%= recurso.imagen %>" alt="<%= recurso.imagenAlt || '' %>" width="1200" height="764">
 
         <!-- El envío lo maneja public/js/main.js: manda los datos al Apps Script (Google Sheets) y lleva a la página de descarga -->
         <form class="form" method="post" action="<%= endpoint %>" novalidate
               data-suscripcion
               data-endpoint="<%= endpoint %>"
               data-recurso="<%= recurso.slug %>"
-              data-gracias="/recursos/<%= recurso.slug %>/gracias">
+              data-gracias="<%= ruta('/recursos/') %><%= recurso.slug %>/gracias">
           <p class="form__titulo">Déjame tu email y descárgala gratis</p>
 
           <div class="campo">
@@ -48,7 +48,7 @@
 
           <label class="check">
             <input type="checkbox" name="acepto" value="si" required aria-describedby="err-acepto">
-            <span>Acepto recibir contenido de <%= site.nombre %> y la <a href="/privacidad" target="_blank">política de privacidad</a>.</span>
+            <span>Acepto recibir contenido de <%= site.nombre %> y la <a href="<%= ruta('/privacidad') %>" target="_blank">política de privacidad</a>.</span>
           </label>
           <p class="campo__error" id="err-acepto" hidden></p>
 

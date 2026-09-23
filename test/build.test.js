@@ -11,7 +11,7 @@ build({ dev: true, salida });
 const leer = (p) => fs.readFileSync(path.join(salida, p), 'utf8');
 
 test('genera todas las páginas', () => {
-  for (const p of ['index.html', '404.html', 'privacidad/index.html', 'recursos/plantilla-presupuesto/index.html', 'recursos/plantilla-presupuesto/gracias/index.html', '_headers', '_redirects']) {
+  for (const p of ['index.html', '404.html', 'privacidad/index.html', 'recursos/plantilla-presupuesto/index.html', 'recursos/plantilla-presupuesto/gracias/index.html', '_headers', 'recursos/index.html']) {
     assert.ok(fs.existsSync(path.join(salida, p)), `falta ${p}`);
   }
 });
@@ -45,13 +45,34 @@ test('no hay scripts inline ni guiones largos en el contenido', () => {
   }
 });
 
-// ---------- Casos negativos ----------
-test('el build de producción falla si falta la URL del Apps Script', () => {
-  const site = require('../content/site');
-  const original = site.formularioUrl;
-  for (const url of ['', 'http://script.google.com/x', 'https://evil.example.com/exec']) {
-    site.formularioUrl = url;
-    assert.throws(() => build({ dev: false, salida: path.join(salida, 'prod') }), /formularioUrl/);
+test('incluye la política de seguridad como <meta> (GitHub Pages no permite cabeceras)', () => {
+  assert.match(leer('index.html'), /<meta http-equiv="Content-Security-Policy" content="default-src (?:'|&#39;)self(?:'|&#39;); script-src (?:'|&#39;)self/);
+});
+
+test('con BASE_PATH todas las rutas internas llevan el prefijo del repositorio', () => {
+  const sub = path.join(salida, 'gh');
+  build({ dev: false, salida: sub, basePath: '/mari-landing/' });
+  const home = fs.readFileSync(path.join(sub, 'index.html'), 'utf8');
+  const recurso = fs.readFileSync(path.join(sub, 'recursos/plantilla-presupuesto/index.html'), 'utf8');
+  assert.match(home, /href="\/mari-landing\/css\/styles\.css"/);
+  assert.match(home, /href="\/mari-landing\/recursos\/plantilla-presupuesto"/);
+  assert.match(recurso, /data-gracias="\/mari-landing\/recursos\/plantilla-presupuesto\/gracias"/);
+  // ningún href/src interno sin prefijo
+  for (const html of [home, recurso]) {
+    assert.ok(!/(?:href|src|data-gracias)="\/(?!mari-landing\/)/.test(html), 'hay una ruta sin prefijo');
   }
-  site.formularioUrl = original;
+});
+
+// ---------- Casos negativos ----------
+test('rechaza un BASE_PATH con caracteres raros', () => {
+  const { normalizarBase } = require('../scripts/build');
+  for (const malo of ['mari', '/a b', '/"><script>', '//evil.com']) assert.throws(() => normalizarBase(malo));
+  assert.equal(normalizarBase('/mari-landing/'), '/mari-landing');
+  assert.equal(normalizarBase(''), '');
+});
+
+test('el build de producción falla si falta la URL del Apps Script', () => {
+  for (const url of ['', 'http://script.google.com/x', 'https://evil.example.com/exec']) {
+    assert.throws(() => build({ dev: false, salida: path.join(salida, 'prod'), formularioUrl: url }), /formularioUrl/);
+  }
 });

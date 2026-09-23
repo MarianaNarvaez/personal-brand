@@ -9,7 +9,7 @@
       <% site.redes.forEach(function (red) { %>
         <a href="<%= red.url %>" target="_blank" rel="noopener noreferrer"><%= red.nombre %></a>
       <% }) %>
-      <a href="<%= site.politicaPrivacidad %>">Privacidad</a>
+      <a href="<%= ruta(site.politicaPrivacidad) %>">Privacidad</a>
     </div>
   </div>
   <p class="footer__legal contenedor">© <%= anio %> <%= site.nombre %>. Contenido educativo, no constituye asesoría de inversión personalizada.</p>

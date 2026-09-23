@@ -2,7 +2,7 @@
 <%- include('partials/header') %>
 
 <!-- data-acceso: si la persona no pasó por el formulario, main.js la devuelve a la página del recurso -->
-<main class="pagina-recurso" data-acceso="<%= recurso.slug %>" data-formulario="/recursos/<%= recurso.slug %>">
+<main class="pagina-recurso" data-acceso="<%= recurso.slug %>" data-formulario="<%= ruta('/recursos/') %><%= recurso.slug %>">
   <section class="contenedor">
     <div class="panel panel--gracias">
       <div class="panel__texto">
@@ -21,14 +21,14 @@
       </div>
       <div class="panel__visual">
         <div class="circulo circulo--grande" aria-hidden="true"></div>
-        <img src="/img/mari-sonrisa-lado.jpg" alt="Mari Narváez sonriendo" width="988" height="1200">
+        <img src="<%= ruta('/img/mari-sonrisa-lado.jpg') %>" alt="Mari Narváez sonriendo" width="988" height="1200">
       </div>
     </div>
 
     <div class="siguiente">
       <p class="display">¿Quieres aprender a sacarle el jugo?</p>
       <a class="boton" href="<%= site.youtube.suscribirse %>" target="_blank" rel="noopener noreferrer">Mira los videos del canal</a>
-      <a class="enlace" href="/#recursos">Ver más plantillas</a>
+      <a class="enlace" href="<%= ruta('/#recursos') %>">Ver más plantillas</a>
     </div>
   </section>
 </main>

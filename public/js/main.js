@@ -2,6 +2,13 @@
 (function () {
   'use strict';
 
+  // Protección contra clickjacking: la página no debe mostrarse dentro de un iframe ajeno
+  if (window.top !== window.self) {
+    document.documentElement.style.display = 'none';
+    try { window.top.location = window.self.location.href; } catch (e) { /* bloqueado por el navegador */ }
+    return;
+  }
+
   var CLAVE = function (slug) { return 'mn-acceso-' + slug; };
   var EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
   var NOMBRE_RE = /^[\p{L}\p{M}\p{N}' .-]{1,60}$/u;

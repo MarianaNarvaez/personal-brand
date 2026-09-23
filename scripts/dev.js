@@ -64,7 +64,7 @@ for (const carpeta of ['views', 'content', 'public']) {
   });
 }
 
-http.createServer((req, res) => {
+const servidor = http.createServer((req, res) => {
   if (req.method === 'POST' && req.url === ENDPOINT_DEV) return simularSuscripcion(req, res);
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); return res.end(); }
 
@@ -73,7 +73,27 @@ http.createServer((req, res) => {
   const servir = archivo || path.join(DIST, '404.html');
   res.writeHead(estado, { ...HEADERS, 'Content-Type': TIPOS[path.extname(servir)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
   fs.createReadStream(servir).pipe(res);
-}).listen(PORT, () => {
-  console.log(`\nSitio local en http://localhost:${PORT}`);
-  console.log('El formulario está en modo prueba: guarda en data/suscriptores-local.txt\n');
 });
+
+// Si el puerto está ocupado (p. ej. otra versión corriendo), prueba el siguiente
+function escuchar(puerto, intentos = 0) {
+  const alListo = () => {
+    servidor.off('error', alError);
+    console.log(`\nSitio local en http://localhost:${puerto}`);
+    console.log('El formulario está en modo prueba: guarda en data/suscriptores-local.txt\n');
+  };
+  const alError = (err) => {
+    servidor.off('listening', alListo);
+    if (err.code === 'EADDRINUSE' && intentos < 10) {
+      console.warn(`[dev] el puerto ${puerto} está ocupado, probando ${puerto + 1}…`);
+      escuchar(puerto + 1, intentos + 1);
+    } else {
+      console.error(`[dev] no se pudo iniciar el servidor: ${err.message}`);
+      process.exit(1);
+    }
+  };
+  servidor.once('error', alError);
+  servidor.once('listening', alListo);
+  servidor.listen(puerto);
+}
+escuchar(PORT);

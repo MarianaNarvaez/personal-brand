@@ -1,13 +1,13 @@
-# Landing Mari Narváez (v1: Cloudflare Pages + Google Sheets)
+# Landing Mari Narváez (v1: GitHub Pages + Google Sheets)
 
 > Versión gratuita y estática. La versión anterior con servidor Express está en la carpeta `mari-landing`.
 
 Landing principal + páginas de recursos descargables (plantillas). Antes de descargar, la persona deja nombre y email, que se guardan en una **Google Sheet**.
 
-**Cómo funciona:** el sitio es estático (HTML/CSS/JS generado desde `views/` y `content/`), se publica gratis en **Cloudflare Pages** y carga instantáneo. El formulario envía los datos a un **Google Apps Script** que los agrega como fila en tu Google Sheet.
+**Cómo funciona:** el sitio es estático (HTML/CSS/JS generado desde `views/` y `content/`), se publica gratis en **GitHub Pages** y carga instantáneo. El formulario envía los datos a un **Google Apps Script** que los agrega como fila en tu Google Sheet.
 
 ```
-Visitante → página en Cloudflare Pages → formulario → Apps Script → Google Sheet
+Visitante → página en GitHub Pages → formulario → Apps Script → Google Sheet
                                                         ↓ ok
                                               página de descarga
 ```
@@ -43,34 +43,33 @@ La pestaña "Suscriptores" se crea sola con el primer registro.
 
 Si algún día cambias `Code.gs`: **Implementar → Gestionar implementaciones → ✏️ → Versión: Nueva versión**. Así la URL no cambia.
 
-## Paso 2: GitHub
+## Paso 2: GitHub Pages (gratis)
 
-Crea un repositorio **privado** llamado `mari-landing` en github.com y luego:
+GitHub Pages es gratis en repositorios **públicos**. No hay problema en que sea público: el código no tiene contraseñas y los emails viven en tu Google Sheet, no en el repositorio (`data/*.txt` y `.env` están en `.gitignore`).
 
-```bash
-cd ~/Documents/mari-landing-v1
-git init
-git add .
-git commit -m "Landing inicial"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/mari-landing.git
-git push -u origin main
-```
+1. En github.com crea un repositorio **público** llamado `mari-landing` (vacío, sin README).
+2. En la terminal (la primera línea mueve el workflow de publicación a la carpeta oculta `.github/workflows`, donde GitHub lo busca):
+   ```bash
+   cd ~/Documents/mari-landing-v1
+   mkdir -p .github/workflows && mv github-workflow/deploy.yml .github/workflows/deploy.yml && rmdir github-workflow
+   git init
+   git add .
+   git commit -m "Landing inicial"
+   git branch -M main
+   git remote add origin https://github.com/TU_USUARIO/mari-landing.git
+   git push -u origin main
+   ```
+3. En el repositorio: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+4. Ve a la pestaña **Actions**: verás "Publicar en GitHub Pages" corriendo. Si falló porque Pages aún no estaba activado, entra al workflow y dale **Re-run all jobs**.
+5. En 1 o 2 minutos tu sitio queda en `https://TU_USUARIO.github.io/mari-landing/`.
 
-## Paso 3: Cloudflare Pages (gratis)
+Cada `git push` a `main` vuelve a publicar la página sola. Antes de publicar, el workflow corre las pruebas y `npm audit`; si algo falla, no se publica.
 
-1. Crea cuenta en dash.cloudflare.com.
-2. **Workers & Pages → Create → Pages → Connect to Git** y elige `mari-landing`.
-3. Configuración del build:
-   - Framework preset: **None**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. **Save and Deploy**. En 1 o 2 minutos tendrás una URL tipo `mari-landing.pages.dev`.
-5. Si Cloudflare te asigna otro nombre, actualiza `urlBase` en `content/site.js`.
+**Dominio propio (opcional):** Settings → Pages → Custom domain. Pon tu dominio (p. ej. `marinarvaez.co`), crea en tu proveedor de dominio los registros DNS que GitHub te indica y activa **Enforce HTTPS**. Las rutas del sitio se ajustan solas en el siguiente despliegue.
 
-Cada `git push` a `main` vuelve a publicar la página sola.
+**Seguridad extra recomendada:** Settings → Code security → **Code scanning → CodeQL (Default setup)**. Es gratis en repos públicos y revisa el código en cada push.
 
-**Dominio propio (opcional):** en el proyecto de Pages → **Custom domains → Set up a domain**. HTTPS es automático.
+**Alternativa:** el mismo proyecto funciona en Cloudflare Pages (build `npm run build`, salida `dist`); ahí además se aplican las cabeceras de `dist/_headers`.
 
 ## Agregar una plantilla nueva
 
@@ -85,7 +84,7 @@ El archivo en Google Drive debe estar compartido como **"Cualquier persona con e
 - La Sheet tiene datos personales: no la compartas públicamente.
 - El Apps Script valida todo de nuevo (no confía en el navegador), ignora bots (campo oculto), neutraliza fórmulas y limita a 30 registros por minuto.
 - La página de descarga no aparece en Google y redirige al formulario si alguien entra directo. Ojo: es un filtro "suave"; alguien técnico podría ver los links en el código. Para plantillas gratuitas es suficiente.
-- Cabeceras de seguridad (CSP, etc.) en `dist/_headers`, generado desde `lib/headers.js`.
+- Política de seguridad (CSP) incluida en cada página como `<meta>`, porque GitHub Pages no permite cabeceras propias. Como tampoco permite bloquear iframes por cabecera, `main.js` oculta la página si alguien la mete en un iframe ajeno.
 - Recomendado: `npm audit` y generar SBOM con `npx @cyclonedx/cyclonedx-npm --output-file sbom.json`.
 
 ## Pendientes

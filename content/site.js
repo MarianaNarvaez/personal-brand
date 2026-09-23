@@ -2,8 +2,9 @@
 module.exports = {
   nombre: 'Mari Narváez',
   lema: 'Aprende a crear, mantener y multiplicar tu dinero',
-  // Dominio público del sitio (se usa para la imagen al compartir en redes). Cámbialo cuando tengas dominio propio.
-  urlBase: process.env.SITE_URL || 'https://mari-landing.pages.dev',
+  // Dirección pública del sitio (para la imagen al compartir en redes).
+  // En GitHub Pages se llena sola en el despliegue. Cámbiala aquí solo si usas otro hosting.
+  urlBase: process.env.SITE_URL || 'https://USUARIO.github.io/mari-landing',
 
   // URL del Apps Script que guarda los emails en Google Sheets (ver README, paso "Google Sheets").
   // Tiene esta forma: https://script.google.com/macros/s/XXXXXXXX/exec
